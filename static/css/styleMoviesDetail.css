@@ -1,0 +1,31 @@
+
+.top-nav-collapse {
+    background-color: #383838 !important;
+}
+
+.navbar:not(.top-nav-collapse) {
+    background: transparent !important;
+}
+
+@media (max-width: 768px) {
+    .navbar:not(.top-nav-collapse) {
+        background: #383838 !important;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 850px) {
+    .navbar:not(.top-nav-collapse) {
+        background: #383838 !important;
+    }
+}
+
+footer.page-footer {
+    background-color: #383838;
+}
+
+@media (max-width: 450px) {
+    .display-3 {
+        font-size: 3rem;
+    }
+}
+

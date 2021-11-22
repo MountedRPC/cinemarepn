@@ -1,0 +1,545 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>CinemaRepnik</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{% static "css/mdb.min.css" %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
+            integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+            crossorigin="anonymous"></script>
+
+
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+            rel="stylesheet"
+    />
+
+    <style>
+
+        .card-body {
+            background: #383838;
+        }
+
+        .cardR {
+            border-radius: 15px 15px 0px 0px;
+        }
+
+        .card-img, .card-img-top {
+            border-radius: 13px 13px 0px 0px;
+        }
+
+        .card {
+
+            background-color: black;
+        }
+
+        .carousel-card-image {
+            flex: 2;
+        }
+
+        .carousel-right {
+            flex: 1;
+        }
+
+        html,
+        body,
+        header,
+        .jarallax {
+            height: 700px;
+        }
+
+        @media (max-width: 740px) {
+
+            html,
+            body,
+            header,
+            .jarallax {
+                height: 100vh;
+            }
+        }
+
+        @media (min-width: 800px) and (max-width: 850px) {
+
+            html,
+            body,
+            header,
+            .jarallax {
+                height: 100vh;
+            }
+        }
+
+        @media (min-width: 560px) and (max-width: 650px) {
+            header .jarallax h1 {
+                margin-bottom: .5rem !important;
+            }
+
+            header .jarallax h5 {
+                margin-bottom: .5rem !important;
+            }
+        }
+
+        @media (min-width: 660px) and (max-width: 700px) {
+            header .jarallax h1 {
+                margin-bottom: 1.5rem !important;
+            }
+
+            header .jarallax h5 {
+                margin-bottom: 1.5rem !important;
+            }
+        }
+
+        .top-nav-collapse {
+            background-color: #383838 !important;
+        }
+
+        .navbar:not(.top-nav-collapse) {
+            background: transparent !important;
+        }
+
+        @media (max-width: 768px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #383838 !important;
+            }
+        }
+
+        @media (min-width: 800px) and (max-width: 850px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #383838 !important;
+            }
+        }
+
+        footer.page-footer {
+            background-color: #383838;
+        }
+
+        @media (max-width: 450px) {
+            .display-3 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body style="background: #1D1D1D;">
+
+<!--Main Navigation-->
+<header>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="margin-right: 50px;">
+                <strong><i class="fas fa-stream"></i> CinemaRepnik</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
+                    aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'movies' %}">Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cinemas' %}">Cinemas</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about_page' %}">About</a>
+                    </li>
+                </ul>
+                {% if user.is_authenticated %}
+                    <div class="md-form my-0" style="color:grey">
+                        <button class="btn btn-light dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
+                                id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
+                                aria-expanded="false"><i style="padding-right: 5px"
+                                                         class="fas fa-user-circle"></i> {{ user }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                   <a class="dropdown-item" href="{% url 'profile_user' %}">My profile</a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" href="{% url 'exit' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="md-form my-0">
+                        <a class="btn-grey btn text-light" href="{% url 'login' %}">Sign In</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Intro Section -->
+    <div class="view jarallax" data-jarallax='{"speed": 0.2}'
+         style="background-image: url(https://cdn.pixabay.com/photo/2019/11/07/20/48/cinema-4609877_960_720.jpg); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <div class="mask " style="background-color: rgba(0, 0, 0, 0.6)">
+            <div class="container h-100 d-flex justify-content-center align-items-center">
+                <div class="row pt-5 mt-3">
+                    <div class="col-md-12 mb-3">
+                        <div class="intro-info-content text-center">
+                            <h1 class="display-3 mb-5 wow fadeInDown" style="color: white;" data-wow-delay="0.3s">Cinema
+                                Repnik
+                            </h1>
+                            <a class="btn btn-outline-light  btn-lg wow fadeInDown" data-wow-delay="0.3s"
+                               href="{% url 'movies' %}">Movies</a>
+                            <a class="btn btn-light btn-lg wow fadeInDown" style="color: #383838;"
+                               data-wow-delay="0.3s" href="{% url 'cinemas' %}">Cinemas</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+<!--Main Navigation-->
+
+<!--Main Layout-->
+<main>
+    <section class="section pb-3 wow fadeIn" data-wow-delay="0.3s">
+        <h1 class="font-weight-bold text-center h1 my-5 text-light">New releases</h1>
+        <div class="container mt-5 ">
+            <div class="card carousel-card d-flex elegant-color  flex-lg-row flex-column"
+                 style="border-radius: 15px;">
+                <div class="carousel slide float-left carousel-card-image" data-interval="false" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" style="height: 500px;border-radius: 15px 0px 0px 15px; "
+                                 src="{% static 'image/oblivion-poster-fil-ma-oboi-1920x1200_6.jpg' %}"
+                                 alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" style="height: 500px;bborder-radius: 15px 0px 0px 15px; "
+                                 src="{% static 'image/thor-fil-m-poster-oboi-1440x900_4.jpg' %}"
+                                 alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" style="height: 500px;border-radius: 15px 0px 0px 15px; "
+                                 src="{% static 'image/images.jpg' %}"
+                                 alt="Third slide">
+                        </div>
+                    </div>
+                </div>
+                <div class='carousel-right flex-column d-flex text-light'>
+                    <div class='controls justify-content-between flex-row d-flex p-3'>
+                        <div class='control-buttons d-inline'>
+                            <a class="close next-btn" aria-label="next"><i class="fas fa-angle-right m-1"></i></a>
+                            <a class="close prev-btn" aria-label="prev"><i class="fas fa-angle-left m-1"></i></a>
+                        </div>
+                        <div class='control-loader'>
+                            <canvas class="loader" width="20px" height="20px" data-color='#999A9C' data-pause='0'
+                                    data-interval="5000" data-repeat='1'
+                                    data-function="carouselSwitch('next', this.c)"></canvas>
+                        </div>
+                    </div>
+                    <div class='card-body carousel slide carousel-contents pt-0' data-interval="false"
+                         data-ride="carousel">
+                        <div class='carousel-inner h-100'>
+                            <div class='carousel-item active h-100'>
+                                <div class='inside-carousel h-100 d-flex flex-column justify-content-between'>
+                                    <div class='carousel-text flex-column  d-flex'>
+                                        <h5 class='card-title d-inline' style="margin-top: 20px">Oblivion</h5>
+                                        <p class='card-text grey-text'>The earth, which survived the war with alien
+                                            invaders, was empty; the remnants of humanity are preparing to leave the
+                                            planet uninhabitable. The protagonist, a drone maintenance technician, finds
+                                            a crashed NASA ship, whose crew is dying before his eyes. He manages to save
+                                            only one woman - and soon he realizes that this will turn his life
+                                            around.</p>
+                                    </div>
+                                    <a class="font-weight-bold text-light" href="{% url 'movies' %}">Movies<i
+                                            class="fas fa-angle-right ml-2 text-light"></i></a>
+                                </div>
+                            </div>
+
+                            <div class='carousel-item h-100'>
+                                <div class='inside-carousel h-100 d-flex flex-column justify-content-between'>
+                                    <div class='carousel-text flex-column  d-flex'>
+                                        <h5 class='card-title d-inline' style="margin-top: 20px">Thor</h5>
+                                        <p class='card-text grey-text'>Air pollution and melting glaciers - in this
+                                            Norwegian city, it seems like the end of the world is near. And to defeat
+                                            the old evil, you need a legend. </p>
+                                    </div>
+                                    <a class="font-weight-bold text-light" href="{% url 'movies' %}">Movies<i
+                                            class="fas fa-angle-right ml-2 text-light"></i></a>
+                                </div>
+                            </div>
+                            <div class='carousel-item h-100'>
+                                <div class='inside-carousel h-100 d-flex flex-column justify-content-between'>
+                                    <div class='carousel-text flex-column  d-flex'>
+                                        <h5 class='card-title d-inline' style="margin-top: 20px">Ironman</h5>
+                                        <p class='card-text grey-text'>Billionaire inventor Tony Stark is captured by
+                                            Afghan terrorists who are trying to force him to create weapons of mass
+                                            destruction. Unbeknownst to his invaders, Stark constructs high-tech cyber
+                                            armor that helps him escape. However, upon returning to the United States,
+                                            he learns that a conspiracy is being woven on the board of directors of his
+                                            company, fraught with dire consequences.</p>
+                                    </div>
+                                    <a class="font-weight-bold text-light" href="{% url 'movies' %}">Movies<i
+                                            class="fas fa-angle-right ml-2 text-light"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <hr class="mb-5 mt-4">
+        <!--Section: Products v.5-->
+        <section class="section pb-3 wow fadeIn" data-wow-delay="0.3s">
+
+            <!--Section heading-->
+            <h1 class="font-weight-bold text-center h1 my-5 text-light">Films</h1>
+            <!--Section description-->
+            <p class="text-center grey-text mb-5 mx-auto w-responsive text-grey">Films that are now in cinemas.</p>
+
+            <div class="container my-5">
+
+                <div class="row d-flex justify-content-center">
+                    {% for film in films %}
+                        <div class="col-lg-3 col-md-6  d-flex justify-content-center" style="margin-top: 20px">
+                            <div class="card  text-white"
+                                 style="background-color:#2e2d2d; width: 234px; border-radius: 15px;">
+                                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light"
+                                     style=" border-radius: 15px 15px 0px 0px;">
+                                    <img src="{{ film.image_film }}" value="{{ film.id }}" class="img-fluid"/>
+                                    <a href="/movies/films_{{ film.id }}">
+                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ film.name_film }}</h5>
+                                    <p class="card-text">
+                                        {{ film.short_info_film }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="d-flex justify-content-center" style="margin-top: 20px">
+                        <a type="button" class="btn btn-light wow fadeInDown waves-effect waves-light btn-rounded"
+                           style="color: black" data-mdb-ripple-color="#ffffff" href="{% url 'movies' %}"> Go to
+                            poster...
+                            <i class="fas fa-book-open ms-1 "></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section: Products v.5-->
+
+    </div>
+
+    <!-- Streak Section -->
+    <div class="streak streak-photo "
+         style="background-image:url('https://cdn.pixabay.com/photo/2019/11/07/20/48/cinema-4609877_960_720.jpg')">
+
+        <div class="flex-center white-text pattern-1">
+            <ul class="list-unstyled">
+                <li>
+                    <h1 class=" white-text">
+                        <strong>5</strong> Cinemas
+                    </h1>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+    <!-- /.Streak Section -->
+
+    <div class="container">
+
+        <!--Projects section v.4-->
+        <section class="text-center pb-5 wow fadeIn">
+
+            <!--Section heading-->
+            <h2 class="font-weight-bold text-center h1 my-5 text-light">Information</h2>
+            <!--Section description-->
+            <p class="text-center grey-text mb-5 mx-auto w-responsive"> Cinema Repnik - cinemas is a chain of cinemas
+                with high-tech equipment, comfortable seating and delicious movie snacks.</p>
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-12 mb-4">
+                    <div class="card card-image"
+                         style="background-image: url('{% static 'image/photo-1577382144834-8a80d92b925c.jpg' %}');">
+                        <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+                            <div>
+                                <a href="" class="text-secondary">
+                                    <h5>
+                                        <i class="fas fa-igloo pr-2"></i>Cinemas
+                                    </h5>
+                                </a>
+                                <h3 class="mb-4 mt-4">
+                                    <strong>Cinema</strong>
+                                </h3>
+                                <p>Thanks to 4K in motion pictures, you can see a huge amount of detail and feel the
+                                    difference between dark and light areas within the same scene, for example: a bright
+                                    star in a black sky.</p>
+                                <a class="btn btn-secondary btn-sm" href="{% url 'cinemas' %}">
+                                    <i class="fas fa-clone left"></i>More about</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+                    <div class="card card-image"
+                         style="background-image: url('{% static 'image/photo-1585647347483-22b66260dfff.jpg' %}');">
+                        <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+                            <div>
+                                <a href="" class="pink-text">
+                                    <h5>
+                                        <i class="fas fa-cloud-meatball pr-2"></i>Coffee shop
+                                    </h5>
+                                </a>
+                                <h3 class="mb-4 mt-4">
+                                    <strong>Coffe and Shop</strong>
+                                </h3>
+                                <p>On the territory of the multiplex, there is a Sorso coffee shop with original
+                                    desserts and aromatic fresh coffee of its own roast. The cozy interior, comfortable
+                                    armchairs and dim lights create a relaxing atmosphere.</p>
+                                <a class="btn btn-pink btn-sm">
+                                    <i class="fas fa-clone left"></i> More about</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+                    <div class="card card-image"
+                         style="background-image: url('{% static 'image/photo-1627133805103-ce2d34ccdd37.jpg' %}');">
+                        <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+                            <div>
+                                <a href="" class="green-text">
+                                    <h5>
+                                        <i class="fas fa-smile pr-2"></i>Interior
+                                    </h5>
+                                </a>
+                                <h3 class="mb-4 mt-4">
+                                    <strong>Interior of the cinema</strong>
+                                </h3>
+                                <p>The interior of the cinema is designed at the intersection of hi-tech and minimalism
+                                    styles. The checkout counter is shaped like a manned module from Interstellar, and
+                                    the walls are covered with designer soundproof panels.</p>
+                                <a class="btn btn-success btn-sm">
+                                    <i class="fas fa-clone left"></i> More about</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+        </section>
+        <!--Projects section v.4-->
+
+    </div>
+
+</main>
+<!--Main Layout-->
+
+<footer class="bg-dark text-center text-white">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+        <!-- Section: Social media -->
+        <section class="mb-4">
+
+            <!-- Google -->
+            <a class="btn btn-outline-light btn-floating m-1" href="https://www.google.com/account/about/" role="button"
+            ><i class="fab fa-google"></i
+            ></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/ilya_chern1k/?hl=ru"
+               role="button"
+            ><i class="fab fa-instagram"></i
+            ></a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-outline-light btn-floating m-1"
+               href="https://www.linkedin.com/in/%D0%B8%D0%BB%D1%8C%D1%8F-%D1%87%D0%B5%D1%80%D0%BD%D0%B8%D0%BA-390177222/"
+               role="button"
+            ><i class="fab fa-linkedin-in"></i
+            ></a>
+
+            <!-- Github -->
+            <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/MountedRPC" role="button"
+            ><i class="fab fa-github"></i
+            ></a>
+        </section>
+        <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2021 CinemaRepnik
+    </div>
+    <!-- Copyright -->
+</footer>
+
+<!--  SCRIPTS  -->
+<!-- JQuery -->
+
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"
+></script>
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static "js/popper.min.js" %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static "js/mdb.min.js" %}"></script>
+<script>
+    new WOW().init();
+</script>
+<script type="text/javascript" src="{% static "js/carusel.js" %}"></script>
+</body>
+
+</html>

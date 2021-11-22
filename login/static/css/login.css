@@ -1,0 +1,215 @@
+.top-nav-collapse {
+    background-color: #383838 !important;
+}
+
+
+.navbar:not(.top-nav-collapse) {
+    background: transparent !important;
+}
+
+@media (max-width: 768px) {
+    .navbar:not(.top-nav-collapse) {
+        background: #383838 !important;
+    }
+
+
+}
+
+@media (min-width: 800px) and (max-width: 850px) {
+    .navbar:not(.top-nav-collapse) {
+        background: #383838 !important;
+    }
+
+
+}
+
+footer.page-footer {
+    background-color: #383838;
+}
+
+@media (max-width: 450px) {
+    .display-3 {
+        font-size: 3rem;
+    }
+
+    .indent {
+        margin-top: 38%
+    }
+
+
+}
+
+
+@media (max-width: 575.98px) {
+    .indent {
+        margin-top: 35%
+    }
+}
+
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .indent {
+        margin-top: 30%
+    }
+}
+
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .indent {
+        margin-top: 20%
+    }
+}
+
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .indent {
+        margin-top: 15%
+    }
+}
+
+@media (min-width: 1200px) {
+    .indent {
+        margin-top: 12%
+    }
+
+
+}
+
+.card {
+    margin-bottom: 20px;
+    border: none
+
+}
+
+.box {
+    width: 500px;
+    padding: 40px;
+    background: #191919;;
+    text-align: center;
+    transition: 0.25s;
+    border-radius: 20px;
+
+}
+
+body {
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    display: block;
+    height: 100%;
+    min-height: 100vh;
+
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+}
+
+.box input[type="text"],
+.box input[type="email"],
+.box input[type="password"] {
+    border: 0;
+    display: block;
+    background: none;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid white;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+
+.box h3 {
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500
+}
+
+.box input[type="text"]:focus,
+.box input[type="email"]:focus,
+.box input[type="password"]:focus {
+    width: 300px;
+    border-color: white;
+}
+
+.box input[type="submit"] {
+    border: 0;
+    display: block;
+    background: none;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid white;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer
+}
+
+.box input[type="submit"]:hover {
+    background: #2ecc71
+}
+
+.forgot {
+    text-decoration: underline
+}
+
+ul.social-network {
+    list-style: none;
+    display: inline;
+    margin-left: 0 !important;
+    padding: 0
+}
+
+ul.social-network li {
+    display: inline;
+    margin: 0 5px
+}
+
+
+.social-network a.regicon:hover {
+    background-color: #2ecc71
+}
+
+
+.social-network a.regicon:hover i {
+    color: #fff
+}
+
+a.socialIcon:hover,
+.socialHoverClass {
+    color: #44BCDD
+}
+
+.social-circle li a {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 0 auto;
+    border-radius: 50%;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: 20px
+}
+
+.social-circle li i {
+    margin: 0;
+    line-height: 50px;
+    text-align: center
+}
+
+.social-circle li a:hover i,
+.triggeredHover {
+    transform: rotate(360deg);
+    transition: all 0.2s
+}
+
+.social-circle i {
+    color: #fff;
+    transition: all 0.8s;
+    transition: all 0.8s
+}

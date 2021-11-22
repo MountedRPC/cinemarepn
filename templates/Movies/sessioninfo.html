@@ -1,0 +1,300 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>CinemaRepnik</title>
+    <link rel="stylesheet" href="{% static 'css/styleMoviesDetail.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{% static "css/mdb.min.css" %}" rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+            rel="stylesheet"
+    />
+</head>
+<body style="background: #1D1D1D;">
+<header>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="margin-right: 50px;">
+                <strong><i class="fas fa-stream"></i> CinemaRepnik</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
+                    aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{% url 'home' %}">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'movies' %}">Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cinemas' %}">Cinemas</a>
+                    </li>
+                    <li class="nav-item">
+                           <a class="nav-link" href="{% url 'about_page' %}">About</a>
+                    </li>
+                </ul>
+                {% if user.is_authenticated %}
+                    <div class="md-form my-0" style="color:grey">
+                        <button class="btn btn-light dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
+                                id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
+                                aria-expanded="false"><i style="padding-right: 5px"
+                                                         class="fas fa-user-circle"></i> {{ user }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                            <a class="dropdown-item" href="{% url 'profile_user' %}">My profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'exit' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="md-form my-0">
+                        <a class="btn-grey btn text-light" href="{% url 'login' %}">Sign In</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main style="margin-top: 120px">
+    <div class="container">
+        <section class="section pb-3 wow fadeIn" data-wow-delay="0.3s">
+            <h5 class="font-weight-bold  h5 text-center text-grey">{{ sessions.ID_Films.name_film }}</h5>
+            <hr class="mb-3 mt-4">
+            <div class="row">
+                <div class="col">
+                    <h3 class="font-weight-bold text-light"><i
+                            class="fas fa-film"></i> {{ sessions.ID_Films.name_film }}</h3>
+                    <p class="grey-text mx-auto  lead">
+                        <i class="fas fa-map-marker-alt"></i> {{ sessions.ID_cinema.name_cinemas }} {{ sessions.ID_cinema.address_cinemas }}
+                        / Hall {{ sessions.hallnumber_session }}
+                    </p>
+                    <p class="grey-text mx-auto text-justify lead">
+                        <i class="fas fa-calendar-alt"></i> {{ sessions.date_session|date:"D d M Y H:i" }}
+                    </p>
+                </div>
+            </div>
+            <hr class="mb-4 mt-4">
+            {% if sessions.date_session|time:"H:i" > '21:00' %}
+                <div class="row">
+                    <div class="col">
+                        <div style="padding: 16px;background-color: rgba(255, 255, 255, 0.05);border-radius: 15px;">
+                            <h5 style="margin: 0px 0px 16px;" class="font-weight-bold text-light">Pay attention!</h5>
+                            <p class="grey-text mx-auto text-justify">After 23:00, exit from the cinema, including the
+                                parking lot, is through the street. If you have any questions, please contact our
+                                employees,
+                                they will be happy to help you.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-5 mt-4">
+            {% endif %}
+            <div class="row">
+                <div class="col text-center mt-4">
+                    <h5 class="font-weight-bold text-center text-light mb-3">Buy ticket</h5>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="input-group mb-3  flex-nowrap">
+                            <span class="input-group-text text-light"
+                                  id="addon-wrapping">Price:{{ sessions.price_session }}$</span>
+                            <input style="background: transparent;" type="number" name="countTicket"
+                                   class="form-control text-light"
+                                   min="1" max="{{ sessions.countplaces_session }}" placeholder="Count ticket"
+                                   aria-label="countTicket"
+                                   aria-describedby="addon-wrapping" required/>
+                        </div>
+                        {% if user.is_authenticated %}
+                            <div class="d-grid gap-2">
+                                <button style="margin: 0;" type="submit" class="btn btn-light ">Buy ticket</button>
+                            </div>
+                        {% else %}
+                            <div class="d-grid gap-2">
+                                <button style="margin: 0;" type="button" data-mdb-target="#ErorBuy"
+                                        data-mdb-toggle="modal"
+                                        class="btn btn-light ">Buy ticket
+                                </button>
+                                <!-- Vertically centered modal -->
+                                <div class="modal fade " id="ErorBuy" tabindex="-1"
+                                     aria-labelledby="ErorBuyLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered "
+                                         style="border-radius: 5px;">
+                                        <div class="modal-content" style="border-radius: 5px;">
+                                            <div class="modal-header" style="border: 0px;background-color:#383838">
+                                                <button
+                                                        type="button"
+                                                        class="btn-close btn-light"
+                                                        data-mdb-dismiss="modal"
+                                                        aria-label="Close"
+                                                ></button>
+                                            </div>
+                                            <div class="modal-body text-center"
+                                                 style="background-color:#616161 !important">
+                                                <h6 class="font-weight-bold text-center text-light mb-3">Before buying a
+                                                    ticket, you need to log in!</h6>
+                                                <div class="md-form my-0">
+                                                    <a class="btn-light btn" href="{% url 'login' %}">Sign
+                                                        In</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+                <div class="col-md-4 mt-4">
+                    <h5 class="font-weight-bold text-center text-light mb-3">Seat types</h5>
+                    <p class="grey-text mx-auto text-center">{{ sessions.ID_cinema.name_cinemas }}
+                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <hr class="mb-3 mt-3">
+                            <div class="col-2 mr-5 pl-5">
+                                <svg width="40" height="100%" viewBox="0 0 92 75" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M18.61 7.64C18.61 6.44706 19.5771 5.48 20.77 5.48H71.24C72.4329 5.48 73.4 6.44707 73.4 7.64V18.1548C73.3934 18.229 73.39 18.3041 73.39 18.38V54.28C73.39 54.8521 73.1631 55.4008 72.759 55.8057C72.3556 56.21 71.8085 56.438 71.2374 56.44H20.7626C20.1915 56.438 19.6444 56.21 19.241 55.8057C18.8369 55.4008 18.61 54.8521 18.61 54.28V18.38V7.64ZM13.61 15.88V7.64C13.61 3.68564 16.8156 0.48 20.77 0.48H71.24C75.1944 0.48 78.4 3.68564 78.4 7.64V15.88H89.49C90.8707 15.88 91.99 16.9993 91.99 18.38V57.27L91.99 57.2751C91.9808 61.8345 90.1678 66.205 86.9471 69.4323C83.7264 72.6596 79.3596 74.4815 74.8002 74.5L74.79 74.5H17.21L17.1999 74.5C12.6445 74.4815 8.28116 72.6629 5.0611 69.4406C1.84105 66.2184 0.0254085 61.8538 0.0100145 57.2985L0.0100002 57.29V18.38C0.0100002 16.9993 1.12929 15.88 2.51 15.88H13.61ZM13.61 20.88H5.01V57.2856C5.02199 60.5199 6.31154 63.6185 8.59784 65.9063C10.884 68.194 13.9815 69.4857 17.2157 69.5H74.7843C78.0213 69.4857 81.1213 68.1917 83.408 65.9004C85.6949 63.6089 86.9825 60.5058 86.99 57.2685L86.99 57.2649L86.99 20.88H78.4V54.56C78.4 58.5144 75.1944 61.72 71.24 61.72H20.77C16.8156 61.72 13.61 58.5144 13.61 54.56V54.28V20.88Z"
+                                          fill="#8688C1"></path>
+                                </svg>
+                            </div>
+                            <div class="col pr-5 grey-text">
+                                <p class="text-light mb-0">Movie chair</p>
+                                <p>Single comfortable wide armchair with cup holder</p>
+                            </div>
+                            <hr class="mb-3 mt-3">
+                        </div>
+                        <div class="row">
+                            <div class="col-2 mr-5" style="padding-left: 38px;">
+                                <svg style="color: rgb(173, 53, 50);" width="100px" height="100%" viewBox="0 0 92 75"
+                                     fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="currentColor"
+                                          d="M51.2,13.8V3c0-1.7-1.3-3-3-3h-44c-1.7,0-3,1.3-3,3v10.5C0.5,13.9,0,14.6,0,15.6c0,5,4,8.4,9,8.4h34 c5,0,9-3.4,9-8.4C52,14.8,51.7,14.2,51.2,13.8z M4.2,2h44c0.6,0,1,0.4,1,1v10H49c0,0,0,0,0,0h-1.6c0,0-1.7,0-2,0S45,13.3,45,13.3 c0,1.7-1.3,3-3,3H10c-1.7,0-3-1.3-3-3c0,0,0-0.3-0.4-0.3c-0.4,0-3.5,0-3.5,0V3C3.2,2.5,3.6,2,4.2,2z M43,22H9c-4.1,0-7-2.7-7-6.4 C2,15.1,2.6,15,3,15h2.4c0.7,1.9,2.5,3.3,4.7,3.3h32c2.2,0,4-1.4,4.7-3.3H49c0.4,0,1,0.1,1,0.6C50,19.3,47.1,22,43,22z"></path>
+                                </svg>
+                            </div>
+                            <div class="col pr-5 grey-text">
+                                <p class="text-light  mb-0">Love Seat</p>
+                                <p>Places for two of increased comfort. The seats are connected in such a way as to set
+                                    up
+                                    the viewer for a pleasant viewing experience. The price is for a double seat.</p>
+                            </div>
+                            <hr class="mb-3 mt-3">
+                        </div>
+                        <div class="row">
+                            <div class="col-2 mr-5 pl-5">
+                                <svg style="color: rgb(28, 156, 223);" width="40" height="100%" viewBox="0 0 76 85"
+                                     fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M19.5601 0H19.5523L19.5446 7.99894e-05C18.396 0.0119419 17.2979 0.473466 16.4857 1.28565C15.6735 2.09783 15.212 3.19597 15.2002 4.34451L15.2001 4.35225V4.36V10.4102H3.68C1.64759 10.4102 0 12.0577 0 14.0902V34.0702C0 36.1026 1.64759 37.7502 3.68 37.7502H15.2298C15.0813 38.1383 15 38.5597 15 39V39.548C12.7853 39.7547 9.94403 40.6555 7.51545 42.7683C4.64942 45.2618 2.5 49.3199 2.5 55.5V71V71.0974L2.5126 71.194C2.7904 73.3238 3.77171 76.4834 5.84551 79.1981C7.95228 81.9559 11.2115 84.2737 15.9287 84.4983L15.9643 84.5H16H63H63.1761L63.3474 84.4592C65.298 83.9948 68.1579 82.7945 70.5594 80.6583C72.9925 78.494 75 75.3187 75 71V55.5558C75.1732 53.1581 74.7586 49.5537 72.9292 46.334C71.1384 43.1822 68.0187 40.4608 63 39.6279V32.5C63 31.4361 62.5253 30.4831 61.7762 29.8411C61.7991 29.8192 61.8219 29.7969 61.8444 29.7744C62.6566 28.9622 63.1181 27.864 63.13 26.7155L63.1301 26.7077V26.7V4.41464C63.1367 3.26027 62.6883 2.14966 61.8819 1.32339C61.0741 0.495694 59.9723 0.0202042 58.816 0.000223875L58.7901 1.5V0H19.5601ZM63 42.6776V73.5C63 75.433 61.433 77 59.5 77H18.5C16.567 77 15 75.433 15 73.5V42.5651C13.3703 42.7681 11.2774 43.4719 9.48455 45.0317C7.35058 46.8882 5.5 50.0801 5.5 55.5V70.899C5.7394 72.6046 6.55895 75.1901 8.22949 77.3769C9.89249 79.5539 12.3729 81.3152 16.0367 81.5H62.8172C64.3677 81.1014 66.6607 80.1111 68.5656 78.4167C70.5075 76.6893 72 74.2813 72 71V55.5V55.4424L72.0044 55.385C72.1533 53.449 71.8096 50.4363 70.3208 47.816C69.0055 45.501 66.774 43.4388 63 42.6776ZM15.2001 13.4102V13.5H16.7001H29.687C29.8672 13.5043 30.039 13.5781 30.1663 13.706C30.2942 13.8344 30.3672 14.0075 30.3701 14.1886V29.56V31.06H30.39V34.0702C30.39 34.4457 30.0856 34.7502 29.71 34.7502H3.68C3.30445 34.7502 3 34.4457 3 34.0702V14.0902C3 13.7146 3.30445 13.4102 3.68 13.4102H15.2001ZM33.39 28.06H58.7609C59.1223 28.0546 59.4674 27.9087 59.7231 27.653C59.9788 27.3974 60.1247 27.0522 60.1301 26.6909V4.41V4.39939L60.1301 4.3994C60.1327 4.03321 59.9907 3.6808 59.7349 3.41873C59.4816 3.15919 59.137 3.00902 58.7748 3H19.5692C19.2079 3.00538 18.8627 3.1513 18.607 3.40697C18.3514 3.66263 18.2055 4.00779 18.2001 4.36915V10.4102H29.71C31.7424 10.4102 33.39 12.0577 33.39 14.0902V28.06ZM33.5 32V35C33.5 36.933 31.933 38.5 30 38.5H18.5C18.2239 38.5 18 38.7239 18 39V73.5C18 73.7761 18.2239 74 18.5 74H59.5C59.7761 74 60 73.7761 60 73.5V32.5C60 32.2239 59.7761 32 59.5 32H33.5Z"></path>
+                                </svg>
+                            </div>
+                            <div class="col pr-5 grey-text">
+                                <p class="text-light mb-0">Recliner</p>
+                                <p>Comfortable armchair for one person with adjustable backrest and footrest height.</p>
+
+                            </div>
+                            <hr class="mb-3 mt-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<footer class=" bg-dark text-center text-white" style="margin-top: 20px">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+        <!-- Section: Social media -->
+        <section class="mb-4">
+
+            <!-- Google -->
+            <a class="btn btn-outline-light btn-floating m-1" href="https://www.google.com/account/about/"
+               role="button"
+            ><i class="fab fa-google"></i
+            ></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-outline-light btn-floating m-1"
+               href="https://www.instagram.com/ilya_chern1k/?hl=ru"
+               role="button"
+            ><i class="fab fa-instagram"></i
+            ></a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-outline-light btn-floating m-1"
+               href="https://www.linkedin.com/in/%D0%B8%D0%BB%D1%8C%D1%8F-%D1%87%D0%B5%D1%80%D0%BD%D0%B8%D0%BA-390177222/"
+               role="button"
+            ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <!-- Github -->
+            <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/MountedRPC" role="button"
+            ><i class="fab fa-github"></i
+            ></a>
+        </section>
+        <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2021 CinemaRepnik
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- Scripts -->
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/infinite.min.js' %}"></script>
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"
+></script>
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static "js/popper.min.js" %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static "js/mdb.min.js" %}"></script>
+<script>
+    new WOW().init();
+</script>
+<!-- Scripts -->
+</body>
+</html>

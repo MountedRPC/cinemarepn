@@ -1,0 +1,193 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>CinemaRepnik</title>
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{% static "css/mdb.min.css" %}" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
+            integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+            crossorigin="anonymous"></script>
+
+
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+            rel="stylesheet"
+    />
+    <link href="{% static "css/login.css" %}" rel="stylesheet">
+
+</head>
+<body style="background-image: url({% static 'image/photo-1616530940355-351fabd9524b 1.png' %});">
+<!--Main Navigation-->
+<header>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="margin-right: 50px;">
+                <strong><i class="fas fa-stream"></i> CinemaRepnik</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
+                    aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'movies' %}">Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cinemas' %}">Cinemas</a>
+                    </li>
+                    <li class="nav-item">
+                           <a class="nav-link" href="{% url 'about_page' %}">About</a>
+                    </li>
+                </ul>
+                {% if user.is_authenticated %}
+                    <div class="md-form my-0" style="color:grey">
+                        <button class="btn btn-light dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
+                                id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
+                                aria-expanded="false"><i style="padding-right: 5px"
+                                                         class="fas fa-user-circle"></i> {{ user }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'profile_user' %}">My profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="md-form my-0">
+                        <a class="btn-grey btn">Sign In</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+</header>
+<!--Main Navigation-->
+<main>
+    <section class="section pb-3 wow fadeIn" data-wow-delay="0.3s">
+        <div class="container p-4 pb-0 d-flex justify-content-center">
+            <div class="row indent d-flex justify-content-center" style=" ">
+                {% if message == 1 %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> This user already exists!
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+                <div class="card box">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <h3>Cinema Repnik</h3>
+                        <p class="text-muted"> Please enter input!</p>
+                        <div class="col"><input type="text" name="user_name" placeholder="Username" required></div>
+                        <div class="col"><input type="email" name="user_mail" placeholder="E-mail" required></div>
+                        <div class="col"><input type="password" name="password" placeholder="Password" required></div>
+                        <div class="col"><a class="forgot text-muted" href="{% url 'exit' %}">Forgot password?</a></div>
+                        <input type="submit" name="" value="Registation" href="#">
+                        <div class="col-md-12">
+                            <ul class="social-network social-circle">
+                                <li style="color: white"><a href="{% url 'login' %}" class="regicon" title="Google +"><i
+                                        class="fas fa-users"></i></a> Authorization
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<footer class="bg-dark text-center text-white">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+        <!-- Section: Social media -->
+        <section class="mb-4">
+
+            <!-- Google -->
+            <a class="btn btn-outline-light btn-floating m-1" href="https://www.google.com/account/about/" role="button"
+            ><i class="fab fa-google"></i
+            ></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/ilya_chern1k/?hl=ru"
+               role="button"
+            ><i class="fab fa-instagram"></i
+            ></a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-outline-light btn-floating m-1"
+               href="https://www.linkedin.com/in/%D0%B8%D0%BB%D1%8C%D1%8F-%D1%87%D0%B5%D1%80%D0%BD%D0%B8%D0%BA-390177222/"
+               role="button"
+            ><i class="fab fa-linkedin-in"></i
+            ></a>
+
+            <!-- Github -->
+            <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/MountedRPC" role="button"
+            ><i class="fab fa-github"></i
+            ></a>
+        </section>
+        <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2021 CinemaRepnik
+    </div>
+    <!-- Copyright -->
+</footer>
+
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"
+></script>
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static "js/popper.min.js" %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static "js/mdb.min.js" %}"></script>
+<script>
+    new WOW().init();
+</script>
+<script type="text/javascript" src="{% static "js/carusel.js" %}"></script>
+</body>
+</html>
